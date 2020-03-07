@@ -1,22 +1,31 @@
 {
-  "name": "Start on Heroku: Python",
-  "description": "A barebones Python app, which can easily be deployed to Heroku.",
-  "image": "heroku/python",
+  "name": "---- Registration Server",
+  "description": "A registration server for ---- collaboration meetings",
+  "keywords": [
+    "flask",
+    "python"
+  ],
   "repository": "https://github.com/ArXivR/arxivr-backend",
-  "keywords": ["python", "django" ],
-  "addons": [ "heroku-postgresql" ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }
+   ],
   "env": {
     "SECRET_KEY": {
-      "description": "The secret key for the Django application.",
+      "description": "The secret registration key.",
       "generator": "secret"
     }
   },
-  "environments": {
-    "test": {
-      "scripts": {
-        "test-setup": "python manage.py collectstatic --noinput",
-        "test": "python manage.py test"
-      }
+  "buildpacks": [
+    {
+      "url": "heroku/python"
     }
+  ],
+  "scripts": {
+    "postdeploy": "python registration_server.py --create"
   }
 }
